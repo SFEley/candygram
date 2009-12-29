@@ -10,6 +10,17 @@ Candygram is a job queueing system for the MongoDB database.  It is loosely base
 * Workers can adaptively spawn more workers or die off as the job queue becomes backlogged or empties.  (TODO)
 * The job queue is a capped collection; because jobs are never deleted, recent history can be analyzed and failure states reported.
 
+== Limitations
+
+The serialization employed here is vaguely similar to that employed to YAML.to_yaml, but simpler. You can pass most objects as parameters, but the following will not work:
+
+* You cannot pass blocks or procs to delayed methods.  There's just no robust way to capture and serialize the things.
+* Objects with singleton methods or module extensions outside their class will lose them.
+* Object classes must accept the `.new` method without any parameters.  Any initialization magic that depends on arguments passed in will be confused.
+* In general, objects that maintain state in any way cleverer than their instance variables will get unclever, and probably unpredictable.
+* Circular object graphs will probably cause explosions.
+
+
 
 == Copyright
 
