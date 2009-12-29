@@ -1,3 +1,5 @@
+require 'candygram/wrapper'
+
 module Candygram
   # The special sauce that allows an object to place its method calls into the job queue. 
   module Delivery
@@ -23,7 +25,7 @@ module Candygram
       gram = {
         :class => self.class.name,
         :method => method,
-        :arguments => args
+        :arguments => Wrapper.wrap_array(args)
       }
       Candygram.queue << gram
     end

@@ -1,19 +1,7 @@
-require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
+require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Candygram::Delivery do
-  # A test class that we can wrap all this stuff in
-  class Explosive
-    include Candygram::Delivery
-    
-    def kaboom
-      "An earth-shattering kaboom!"
-    end
-    
-    def repeated_kaboom(planet, repeat)
-      "A #{planet}-shattering kaboom #{repeat} times!"
-    end
-  end
-  
+
   before(:each) do
     @this = Explosive.new
   end
@@ -32,5 +20,13 @@ describe Candygram::Delivery do
     doc = Candygram.queue.find_one(id)
     doc['arguments'].should == ['Venus', 15]
   end
+  
+  it "takes an object as an argument" do
+    m = Missile.new
+    id = @this.object_kaboom_later('Pluto', 6, m)
+    doc = Candygram.queue.find_one(id)
+    doc['arguments'][2].should be_a_kind_of(Hash)
+  end
+  
 
 end
