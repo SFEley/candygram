@@ -1,3 +1,4 @@
+require 'candygram/connection'
 require 'candygram/wrapper'
 
 module Candygram
@@ -24,8 +25,11 @@ module Candygram
     def send_candygram(method, *args)
       gram = {
         :class => self.class.name,
+        :package => Wrapper.wrap_object(self),
         :method => method,
-        :arguments => Wrapper.wrap_array(args)
+        :arguments => Wrapper.wrap_array(args),
+        :created_at => Time.now.utc,
+        :deliver_at => Time.now.utc
       }
       Candygram.queue << gram
     end

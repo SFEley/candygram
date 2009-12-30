@@ -7,3 +7,4 @@ end
 require 'mongo'
 require 'candygram/connection'
 require 'candygram/delivery'
+require 'candygram/dispatch'
