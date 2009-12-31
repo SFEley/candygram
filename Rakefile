@@ -6,12 +6,14 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = "candygram"
     gem.summary = %Q{Delayed job queueing for MongoMapper}
-    gem.description = %Q{Candygram is a loose port of the delayed_job gem for the MongoDB document-oriented database. It uses the MongoMapper ORM and allows you to specify jobs to be executed immediately or at any time in the future.}
+    gem.description = %Q{Candygram provides a job queue for the MongoDB document-oriented database, inspired by delayed_job and Resque. It uses the MongoMapper ORM and allows you to queue method calls for execution ASAP or at any time in the future.}
     gem.email = "sfeley@gmail.com"
     gem.homepage = "http://github.com/SFEley/candygram"
     gem.authors = ["Stephen Eley"]
+    gem.add_dependency "mongo", ">= 0.18"
     gem.add_development_dependency "rspec", ">= 1.2.9"
-    gem.add_development_dependency "yard", ">= 0"
+    gem.add_development_dependency "yard", ">= 0.5.2"
+    gem.add_development_dependency "mocha", ">= 0.9.7"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new

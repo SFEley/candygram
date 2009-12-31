@@ -17,7 +17,7 @@ module Candygram
       sleep(cycles)
       yield if block_given?
       @dispatch.finish
-      t.join(3) or raise "Dispatch never completed!"
+      t.join(20) or raise "Dispatch never completed!"
     end
     
     it "knows how often to check the database" do
@@ -51,8 +51,8 @@ module Candygram
     end
     
     it "keeps track of its runners" do
-      3.times { @exp.slow_kaboom_later; sleep 1 }
-      run_dispatch(2) do
+      3.times { @exp.slow_kaboom_later }
+      run_dispatch(4) do
         @dispatch.runners['Explosive'].length.should == 3
       end
     end
@@ -78,5 +78,16 @@ module Candygram
       @dispatch.runners['Explosive'].should be_empty
     end
       
+    it "keeps track of maximum instances for each class" do
+      10.times { @exp.slow_kaboom_later }
+      run_dispatch(3) do
+        a = @queue.find(:locked => {"$exists" => false})
+        a.count.should == 5
+        sleep(10)
+        a = @queue.find(:locked => {"$exists" => false})
+        a.count.should == 0
+      end
+    end
+        
   end
 end

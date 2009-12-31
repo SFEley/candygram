@@ -1,6 +1,8 @@
 # A test class that we can make deliveries with and easily check results.
 class Explosive
   include Candygram::Delivery
+  CANDYGRAM_MAX = 5
+  
   attr_accessor :weight
   
   def kaboom
