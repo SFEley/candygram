@@ -56,5 +56,9 @@ module Candygram
   def self.create_queue(name=DEFAULT_QUEUE, size=DEFAULT_QUEUE_SIZE)
     q = db.create_collection(name, :capped => true, :size => size)
     # Make indexes here...
+    q.create_index('deliver_at')
+    q.create_index('locked')
+    q.create_index('result')
+    q
   end
 end
