@@ -1,4 +1,4 @@
-= Candygram
+# Candygram
 
 __"Candygram for Mongo!"__ — _Blazing Saddles_
 
@@ -10,7 +10,7 @@ Candygram is a job queueing system for the MongoDB database.  It is loosely base
 * A centralized dispatcher forks runners to handle each job, with maximum limits defined per class.
 * The job queue is a capped collection; because jobs are never deleted, recent history can be analyzed and failure states reported.
 
-== Installation
+## Installation
 
 Come on, you've done this before:
 
@@ -18,7 +18,7 @@ Come on, you've done this before:
     
 Candygram requires the **mongo** gem, and you'll probably be much happier if you install the **mongo\_ext** gem as well. The author uses only Ruby 1.9, but it _should_ work in Ruby 1.8.  If it doesn't, please report a bug in Github's issue tracking system.
 
-== Configuration
+## Configuration
 
 Both the Delivery and the Dispatcher modules take some configuration
 parameters to connect to the proper Mongo collection:
@@ -34,7 +34,7 @@ parameters to connect to the proper Mongo collection:
     # Or, to make a brand new queue with the proper indexes:
     Candygram.create_queue('my_queue', 1048576) # 1MB capped collection
     
-== Creating Jobs
+## Creating Jobs
 
 You can set up any Ruby class to delay method executions by including the Delivery module: 
   
@@ -56,7 +56,7 @@ You can continue to use the class as you normally would, of course.  If you want
 
 This will serialize the object _e_ (including any instance variables) into a Mongo document, along with the method name and the argument.  The Candygram dispatcher will find it the next time it looks for jobs to run.  It will fork a separate process to unpack the object, call the `kaboom` method, and save the return value in the job document for later reference.
 
-== Dispatching
+## Dispatching
 
 Nice Rake tasks and Rails generators and such are still pending.  In the meantime, you can easily make your own dispatch script and call it with Rake or cron or trained beagle or what-have-you:
 
@@ -80,7 +80,7 @@ The dispatcher forks a separate process for each job in the queue, constrained b
 
 Job runners push status information onto the document to indicate time of running and completion.  Future enhancements will likely include some reporting on this data, detection and rerunning on exception or timeout, and (possibly) optimization based on average run times.
   
-== Limitations
+## Limitations
 
 * You cannot pass blocks or procs to delayed methods.  There's just no robust way to capture and serialize the things.
 * Objects with singleton methods or module extensions outside their class will lose them.
@@ -89,7 +89,7 @@ Job runners push status information onto the document to indicate time of runnin
 * Circular object graphs will probably cause explosions.
 * Because it uses `fork`, this won't run on Windows.  (A limitation which bothers me not one iota.)
 
-== Big Important Disclaimer
+## Big Important Disclaimer
 
 This is still very very alpha software.  I needed this for a couple of my own projects, but I'm pushing it into the wild _before_ proving it on those projects; if I don't, I'll probably lose energy and forget to do all the gem bundling and such.  It's not nearly as robust yet as I hope to make it: there's a lot more I want to do for handling error cases and making the dispatcher easy to keep running.
 
@@ -98,6 +98,6 @@ I welcome your suggestions and bug reports using the Github issue tracker.  I'm 
 Have Fun.
 
 
-== Copyright
+## Copyright
 
 Copyright (c) 2009 Stephen Eley. See LICENSE for details.
